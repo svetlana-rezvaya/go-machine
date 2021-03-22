@@ -12,6 +12,11 @@ func fetchInstruction(computer machine) (instruction, error) {
 		registerIndex := computer.memory[ipRegister+2]
 
 		fetchedInstruction.parameters = []int{constant, registerIndex}
+	} else if instructionKind == loadMemoryOpcode {
+		memoryIndex := computer.memory[ipRegister+1]
+		registerIndex := computer.memory[ipRegister+2]
+
+		fetchedInstruction.parameters = []int{memoryIndex, registerIndex}
 	} else {
 		return instruction{}, fmt.Errorf(
 			"unknown instruction 0x%x at address 0x%x",

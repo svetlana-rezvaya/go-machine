@@ -14,16 +14,11 @@ func fetchInstruction(computer machine) (instruction, error) {
 	}
 
 	fetchedInstruction := instruction{kind: instructionKind}
-	if instructionKind == loadConstantOpcode {
-		constant := computer.memory[ipRegister+1]
-		registerIndex := computer.memory[ipRegister+2]
-
-		fetchedInstruction.parameters = []int{constant, registerIndex}
-	} else if instructionKind == loadMemoryOpcode {
-		memoryIndex := computer.memory[ipRegister+1]
-		registerIndex := computer.memory[ipRegister+2]
-
-		fetchedInstruction.parameters = []int{memoryIndex, registerIndex}
+	parameterCount := getOpcodeParameterCount(instructionKind)
+	for shift := 1; shift <= parameterCount; shift = shift + 1 {
+		parameter := computer.memory[ipRegister+shift]
+		fetchedInstruction.parameters =
+			append(fetchedInstruction.parameters, parameter)
 	}
 
 	return fetchedInstruction, nil

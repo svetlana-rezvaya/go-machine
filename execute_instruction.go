@@ -7,6 +7,9 @@ func executeInstruction(computer machine, instructionInstance instruction) {
 
 		computer.registers[registerIndex] = constant
 	} else if instructionInstance.kind == loadMemoryOpcode {
+		memoryIndex := instructionInstance.parameters[0]
+		registerIndex := instructionInstance.parameters[1]
 
+		computer.registers[registerIndex] = computer.memory[memoryIndex]
 	}
 }

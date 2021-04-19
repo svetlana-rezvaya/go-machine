@@ -16,5 +16,10 @@ func executeInstruction(computer machine, instructionInstance instruction) {
 		memoryIndex := instructionInstance.parameters[1]
 
 		computer.memory[memoryIndex] = constant
+	} else if instructionInstance.kind == storeMemoryOpcode {
+		registerIndex := instructionInstance.parameters[0]
+		memoryIndex := instructionInstance.parameters[1]
+
+		computer.memory[memoryIndex] = computer.registers[registerIndex]
 	}
 }

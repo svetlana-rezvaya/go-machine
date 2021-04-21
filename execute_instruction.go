@@ -21,5 +21,13 @@ func executeInstruction(computer machine, instructionInstance instruction) {
 		memoryIndex := instructionInstance.parameters[1]
 
 		computer.memory[memoryIndex] = computer.registers[registerIndex]
+	} else if instructionInstance.kind == additionOpcode {
+		leftRegisterIndex := instructionInstance.parameters[0]
+		rightRegisterIndex := instructionInstance.parameters[1]
+		resultRegisterIndex := instructionInstance.parameters[2]
+
+		computer.registers[resultRegisterIndex] =
+			computer.registers[leftRegisterIndex] +
+				computer.registers[rightRegisterIndex]
 	}
 }

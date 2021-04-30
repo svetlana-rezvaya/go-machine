@@ -142,3 +142,26 @@ func Test_executeInstruction_withSubtractionOpcode(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func Test_executeInstruction_withMultiplicationOpcode(test *testing.T) {
+	machineInstance := machine{
+		memory:          []int{7, 4, 1, 0, 2, 17, 15, 13},
+		registers:       []int{2, 9, 4, 8, 6, 0, 5, 3},
+		ipRegisterIndex: 5,
+	}
+	instructionInstance, err := fetchInstruction(machineInstance)
+	if err != nil {
+		test.FailNow()
+	}
+
+	executeInstruction(machineInstance, instructionInstance)
+
+	wantedMachineInstance := machine{
+		memory:          []int{7, 4, 1, 0, 2, 17, 15, 13},
+		registers:       []int{54, 9, 4, 8, 6, 0, 5, 3},
+		ipRegisterIndex: 5,
+	}
+	if !reflect.DeepEqual(machineInstance, wantedMachineInstance) {
+		test.Fail()
+	}
+}

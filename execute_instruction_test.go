@@ -188,3 +188,26 @@ func Test_executeInstruction_withDivisionOpcode(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func Test_executeInstruction_withModuloOpcode(test *testing.T) {
+	machineInstance := machine{
+		memory:          []int{9, 4, 1, 0, 2, 17, 15, 13},
+		registers:       []int{2, 9, 4, 8, 21, 0, 5, 3},
+		ipRegisterIndex: 5,
+	}
+	instructionInstance, err := fetchInstruction(machineInstance)
+	if err != nil {
+		test.FailNow()
+	}
+
+	executeInstruction(machineInstance, instructionInstance)
+
+	wantedMachineInstance := machine{
+		memory:          []int{9, 4, 1, 0, 2, 17, 15, 13},
+		registers:       []int{3, 9, 4, 8, 21, 0, 5, 3},
+		ipRegisterIndex: 5,
+	}
+	if !reflect.DeepEqual(machineInstance, wantedMachineInstance) {
+		test.Fail()
+	}
+}

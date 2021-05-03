@@ -45,5 +45,13 @@ func executeInstruction(computer machine, instructionInstance instruction) {
 		computer.registers[resultRegisterIndex] =
 			computer.registers[leftRegisterIndex] *
 				computer.registers[rightRegisterIndex]
+	} else if instructionInstance.kind == divisionOpcode {
+		leftRegisterIndex := instructionInstance.parameters[0]
+		rightRegisterIndex := instructionInstance.parameters[1]
+		resultRegisterIndex := instructionInstance.parameters[2]
+
+		computer.registers[resultRegisterIndex] =
+			computer.registers[leftRegisterIndex] /
+				computer.registers[rightRegisterIndex]
 	}
 }

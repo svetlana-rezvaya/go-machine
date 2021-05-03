@@ -7,6 +7,7 @@ const storeMemoryOpcode = 4
 const additionOpcode = 5
 const subtractionOpcode = 6
 const multiplicationOpcode = 7
+const divisionOpcode = 8
 
 func isOpcodeKnown(opcode int) bool {
 	return opcode == loadConstantOpcode ||
@@ -15,7 +16,8 @@ func isOpcodeKnown(opcode int) bool {
 		opcode == storeMemoryOpcode ||
 		opcode == additionOpcode ||
 		opcode == subtractionOpcode ||
-		opcode == multiplicationOpcode
+		opcode == multiplicationOpcode ||
+		opcode == divisionOpcode
 }
 
 func getOpcodeParameterCount(opcode int) int {
@@ -27,7 +29,8 @@ func getOpcodeParameterCount(opcode int) int {
 	}
 	if opcode == additionOpcode ||
 		opcode == subtractionOpcode ||
-		opcode == multiplicationOpcode {
+		opcode == multiplicationOpcode ||
+		opcode == divisionOpcode {
 		return 3
 	}
 

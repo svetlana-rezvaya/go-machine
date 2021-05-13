@@ -21,45 +21,31 @@ func executeInstruction(computer machine, instructionInstance instruction) {
 		memoryIndex := instructionInstance.parameters[1]
 
 		computer.memory[memoryIndex] = computer.registers[registerIndex]
-	} else if instructionInstance.kind == additionOpcode {
+	} else if instructionInstance.kind == additionOpcode ||
+		instructionInstance.kind == subtractionOpcode ||
+		instructionInstance.kind == multiplicationOpcode ||
+		instructionInstance.kind == divisionOpcode ||
+		instructionInstance.kind == moduloOpcode {
 		leftRegisterIndex := instructionInstance.parameters[0]
-		rightRegisterIndex := instructionInstance.parameters[1]
-		resultRegisterIndex := instructionInstance.parameters[2]
+		leftOperand := computer.registers[leftRegisterIndex]
 
-		computer.registers[resultRegisterIndex] =
-			computer.registers[leftRegisterIndex] +
-				computer.registers[rightRegisterIndex]
-	} else if instructionInstance.kind == subtractionOpcode {
-		leftRegisterIndex := instructionInstance.parameters[0]
 		rightRegisterIndex := instructionInstance.parameters[1]
-		resultRegisterIndex := instructionInstance.parameters[2]
+		rightOperand := computer.registers[rightRegisterIndex]
 
-		computer.registers[resultRegisterIndex] =
-			computer.registers[leftRegisterIndex] -
-				computer.registers[rightRegisterIndex]
-	} else if instructionInstance.kind == multiplicationOpcode {
-		leftRegisterIndex := instructionInstance.parameters[0]
-		rightRegisterIndex := instructionInstance.parameters[1]
-		resultRegisterIndex := instructionInstance.parameters[2]
+		result := 0
+		if instructionInstance.kind == additionOpcode {
+			result = leftOperand + rightOperand
+		} else if instructionInstance.kind == subtractionOpcode {
+			result = leftOperand - rightOperand
+		} else if instructionInstance.kind == multiplicationOpcode {
+			result = leftOperand * rightOperand
+		} else if instructionInstance.kind == divisionOpcode {
+			result = leftOperand / rightOperand
+		} else if instructionInstance.kind == moduloOpcode {
+			result = leftOperand % rightOperand
+		}
 
-		computer.registers[resultRegisterIndex] =
-			computer.registers[leftRegisterIndex] *
-				computer.registers[rightRegisterIndex]
-	} else if instructionInstance.kind == divisionOpcode {
-		leftRegisterIndex := instructionInstance.parameters[0]
-		rightRegisterIndex := instructionInstance.parameters[1]
 		resultRegisterIndex := instructionInstance.parameters[2]
-
-		computer.registers[resultRegisterIndex] =
-			computer.registers[leftRegisterIndex] /
-				computer.registers[rightRegisterIndex]
-	} else if instructionInstance.kind == moduloOpcode {
-		leftRegisterIndex := instructionInstance.parameters[0]
-		rightRegisterIndex := instructionInstance.parameters[1]
-		resultRegisterIndex := instructionInstance.parameters[2]
-
-		computer.registers[resultRegisterIndex] =
-			computer.registers[leftRegisterIndex] %
-				computer.registers[rightRegisterIndex]
+		computer.registers[resultRegisterIndex] = result
 	}
 }

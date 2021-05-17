@@ -1,31 +1,36 @@
 package main
 
 func executeInstruction(computer machine, instructionInstance instruction) {
-	if instructionInstance.kind == loadConstantOpcode {
+	switch instructionInstance.kind {
+	case loadConstantOpcode:
 		constant := instructionInstance.parameters[0]
 		registerIndex := instructionInstance.parameters[1]
 
 		computer.registers[registerIndex] = constant
-	} else if instructionInstance.kind == loadMemoryOpcode {
+
+	case loadMemoryOpcode:
 		memoryIndex := instructionInstance.parameters[0]
 		registerIndex := instructionInstance.parameters[1]
 
 		computer.registers[registerIndex] = computer.memory[memoryIndex]
-	} else if instructionInstance.kind == storeConstantOpcode {
+
+	case storeConstantOpcode:
 		constant := instructionInstance.parameters[0]
 		memoryIndex := instructionInstance.parameters[1]
 
 		computer.memory[memoryIndex] = constant
-	} else if instructionInstance.kind == storeMemoryOpcode {
+
+	case storeMemoryOpcode:
 		registerIndex := instructionInstance.parameters[0]
 		memoryIndex := instructionInstance.parameters[1]
 
 		computer.memory[memoryIndex] = computer.registers[registerIndex]
-	} else if instructionInstance.kind == additionOpcode ||
-		instructionInstance.kind == subtractionOpcode ||
-		instructionInstance.kind == multiplicationOpcode ||
-		instructionInstance.kind == divisionOpcode ||
-		instructionInstance.kind == moduloOpcode {
+
+	case additionOpcode,
+		subtractionOpcode,
+		multiplicationOpcode,
+		divisionOpcode,
+		moduloOpcode:
 		leftRegisterIndex := instructionInstance.parameters[0]
 		leftOperand := computer.registers[leftRegisterIndex]
 
@@ -33,15 +38,16 @@ func executeInstruction(computer machine, instructionInstance instruction) {
 		rightOperand := computer.registers[rightRegisterIndex]
 
 		result := 0
-		if instructionInstance.kind == additionOpcode {
+		switch instructionInstance.kind {
+		case additionOpcode:
 			result = leftOperand + rightOperand
-		} else if instructionInstance.kind == subtractionOpcode {
+		case subtractionOpcode:
 			result = leftOperand - rightOperand
-		} else if instructionInstance.kind == multiplicationOpcode {
+		case multiplicationOpcode:
 			result = leftOperand * rightOperand
-		} else if instructionInstance.kind == divisionOpcode {
+		case divisionOpcode:
 			result = leftOperand / rightOperand
-		} else if instructionInstance.kind == moduloOpcode {
+		case moduloOpcode:
 			result = leftOperand % rightOperand
 		}
 

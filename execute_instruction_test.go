@@ -5,6 +5,52 @@ import (
 	"testing"
 )
 
+func Test_executeInstruction(test *testing.T) {
+	type data struct {
+		name                  string
+		machineInstance       machine
+		wantedMachineInstance machine
+	}
+
+	tests := []data{
+		data{
+			name: "test",
+			machineInstance: machine{
+				memory:          []int{12, 1, 5, 3, 2, 17, 15, 13},
+				registers:       []int{2, 9, 4, 8, 6, 1, 5, 3},
+				ipRegisterIndex: 5,
+			},
+			wantedMachineInstance: machine{
+				memory:          []int{12, 1, 5, 3, 2, 17, 15, 13},
+				registers:       []int{2, 9, 4, 5, 6, 1, 5, 3},
+				ipRegisterIndex: 5,
+			},
+		},
+	}
+	for _, testData := range tests {
+		instructionInstance, err := fetchInstruction(testData.machineInstance)
+		if err != nil {
+			test.Logf("failed %q: %s", testData.name, err)
+			test.FailNow()
+		}
+
+		executeInstruction(testData.machineInstance, instructionInstance)
+
+		if !reflect.DeepEqual(
+			testData.machineInstance,
+			testData.wantedMachineInstance,
+		) {
+			test.Logf(
+				"failed %q:\n  expected: %+v\n  actual: %+v",
+				testData.name,
+				testData.wantedMachineInstance,
+				testData.machineInstance,
+			)
+			test.Fail()
+		}
+	}
+}
+
 func Test_executeInstruction_withLoadConstantOpcode(test *testing.T) {
 	machineInstance := machine{
 		memory:          []int{12, 1, 5, 3, 2, 17, 15, 13},

@@ -26,11 +26,8 @@ func executeInstruction(computer machine, instructionInstance instruction) {
 
 		computer.memory[memoryIndex] = computer.registers[registerIndex]
 
-	case additionOpcode,
-		subtractionOpcode,
-		multiplicationOpcode,
-		divisionOpcode,
-		moduloOpcode:
+	case additionOpcode, subtractionOpcode,
+		multiplicationOpcode, divisionOpcode, moduloOpcode:
 		leftRegisterIndex := instructionInstance.parameters[0]
 		leftOperand := computer.registers[leftRegisterIndex]
 

@@ -23,19 +23,14 @@ func isOpcodeKnown(opcode int) bool {
 }
 
 func getOpcodeParameterCount(opcode int) int {
-	if opcode == loadConstantOpcode ||
-		opcode == loadMemoryOpcode ||
-		opcode == storeConstantOpcode ||
-		opcode == storeMemoryOpcode {
+	switch opcode {
+	case loadConstantOpcode, loadMemoryOpcode,
+		storeConstantOpcode, storeMemoryOpcode:
 		return 2
-	}
-	if opcode == additionOpcode ||
-		opcode == subtractionOpcode ||
-		opcode == multiplicationOpcode ||
-		opcode == divisionOpcode ||
-		opcode == moduloOpcode {
+	case additionOpcode, subtractionOpcode,
+		multiplicationOpcode, divisionOpcode, moduloOpcode:
 		return 3
+	default:
+		return 0
 	}
-
-	return 0
 }

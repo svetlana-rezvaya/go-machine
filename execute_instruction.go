@@ -1,4 +1,4 @@
-package main
+package machine
 
 func executeInstruction(computer machine, instructionInstance instruction) {
 	switch instructionInstance.kind {

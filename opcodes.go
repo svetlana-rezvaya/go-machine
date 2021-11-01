@@ -1,14 +1,17 @@
 package machine
 
-const LoadConstantOpcode = 1
-const LoadMemoryOpcode = 2
-const StoreConstantOpcode = 3
-const StoreMemoryOpcode = 4
-const AdditionOpcode = 5
-const SubtractionOpcode = 6
-const MultiplicationOpcode = 7
-const DivisionOpcode = 8
-const ModuloOpcode = 9
+// ...
+const (
+	LoadConstantOpcode = iota + 1
+	LoadMemoryOpcode
+	StoreConstantOpcode
+	StoreMemoryOpcode
+	AdditionOpcode
+	SubtractionOpcode
+	MultiplicationOpcode
+	DivisionOpcode
+	ModuloOpcode
+)
 
 // IsOpcodeKnown ...
 func IsOpcodeKnown(opcode int) bool {

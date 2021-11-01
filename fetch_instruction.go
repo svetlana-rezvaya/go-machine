@@ -4,20 +4,20 @@ import "fmt"
 
 // FetchInstruction ...
 func FetchInstruction(computer Machine) (Instruction, error) {
-	ipRegister := computer.Registers[computer.IPRegisterIndex]
-	instructionKind := computer.Memory[ipRegister]
-	if !IsOpcodeKnown(instructionKind) {
+	ipRegisterValue := computer.Registers[computer.IPRegisterIndex]
+	instructionOpcode := computer.Memory[ipRegisterValue]
+	if !IsOpcodeKnown(instructionOpcode) {
 		return Instruction{}, fmt.Errorf(
 			"unknown instruction 0x%x at address 0x%x",
-			instructionKind,
-			ipRegister,
+			instructionOpcode,
+			ipRegisterValue,
 		)
 	}
 
-	fetchedInstruction := Instruction{Kind: instructionKind}
-	parameterCount := GetOpcodeParameterCount(instructionKind)
+	fetchedInstruction := Instruction{Opcode: instructionOpcode}
+	parameterCount := GetOpcodeParameterCount(instructionOpcode)
 	for shift := 1; shift <= parameterCount; shift = shift + 1 {
-		parameter := computer.Memory[ipRegister+shift]
+		parameter := computer.Memory[ipRegisterValue+shift]
 		fetchedInstruction.Parameters =
 			append(fetchedInstruction.Parameters, parameter)
 	}

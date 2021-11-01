@@ -2,7 +2,7 @@ package machine
 
 // ExecuteInstruction ...
 func ExecuteInstruction(computer Machine, instructionInstance Instruction) {
-	switch instructionInstance.Kind {
+	switch instructionInstance.Opcode {
 	case LoadConstantOpcode:
 		constant := instructionInstance.Parameters[0]
 		registerIndex := instructionInstance.Parameters[1]
@@ -36,7 +36,7 @@ func ExecuteInstruction(computer Machine, instructionInstance Instruction) {
 		rightOperand := computer.Registers[rightRegisterIndex]
 
 		result := 0
-		switch instructionInstance.Kind {
+		switch instructionInstance.Opcode {
 		case AdditionOpcode:
 			result = leftOperand + rightOperand
 		case SubtractionOpcode:

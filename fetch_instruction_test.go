@@ -14,7 +14,7 @@ func TestFetchInstruction_success(test *testing.T) {
 	instructionInstance, err := FetchInstruction(machineInstance)
 
 	wantedInstructionInstance := Instruction{
-		Kind:       2,
+		Opcode:       2,
 		Parameters: []int{17, 15},
 	}
 	if !reflect.DeepEqual(instructionInstance, wantedInstructionInstance) {

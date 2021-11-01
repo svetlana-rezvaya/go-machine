@@ -2,6 +2,6 @@ package machine
 
 // Instruction ...
 type Instruction struct {
-	Kind       int
+	Opcode       int
 	Parameters []int
 }

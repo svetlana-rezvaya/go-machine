@@ -1,7 +1,8 @@
 package machine
 
-type machine struct {
-	memory          []int
-	registers       []int
-	ipRegisterIndex int // index of the instruction pointer register
+// Machine ...
+type Machine struct {
+	Memory          []int
+	Registers       []int
+	IPRegisterIndex int // index of the instruction pointer register
 }

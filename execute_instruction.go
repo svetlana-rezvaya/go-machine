@@ -1,54 +1,55 @@
 package machine
 
-func executeInstruction(computer machine, instructionInstance instruction) {
-	switch instructionInstance.kind {
-	case loadConstantOpcode:
-		constant := instructionInstance.parameters[0]
-		registerIndex := instructionInstance.parameters[1]
+// ExecuteInstruction ...
+func ExecuteInstruction(computer Machine, instructionInstance Instruction) {
+	switch instructionInstance.Kind {
+	case LoadConstantOpcode:
+		constant := instructionInstance.Parameters[0]
+		registerIndex := instructionInstance.Parameters[1]
 
-		computer.registers[registerIndex] = constant
+		computer.Registers[registerIndex] = constant
 
-	case loadMemoryOpcode:
-		memoryIndex := instructionInstance.parameters[0]
-		registerIndex := instructionInstance.parameters[1]
+	case LoadMemoryOpcode:
+		memoryIndex := instructionInstance.Parameters[0]
+		registerIndex := instructionInstance.Parameters[1]
 
-		computer.registers[registerIndex] = computer.memory[memoryIndex]
+		computer.Registers[registerIndex] = computer.Memory[memoryIndex]
 
-	case storeConstantOpcode:
-		constant := instructionInstance.parameters[0]
-		memoryIndex := instructionInstance.parameters[1]
+	case StoreConstantOpcode:
+		constant := instructionInstance.Parameters[0]
+		memoryIndex := instructionInstance.Parameters[1]
 
-		computer.memory[memoryIndex] = constant
+		computer.Memory[memoryIndex] = constant
 
-	case storeMemoryOpcode:
-		registerIndex := instructionInstance.parameters[0]
-		memoryIndex := instructionInstance.parameters[1]
+	case StoreMemoryOpcode:
+		registerIndex := instructionInstance.Parameters[0]
+		memoryIndex := instructionInstance.Parameters[1]
 
-		computer.memory[memoryIndex] = computer.registers[registerIndex]
+		computer.Memory[memoryIndex] = computer.Registers[registerIndex]
 
-	case additionOpcode, subtractionOpcode,
-		multiplicationOpcode, divisionOpcode, moduloOpcode:
-		leftRegisterIndex := instructionInstance.parameters[0]
-		leftOperand := computer.registers[leftRegisterIndex]
+	case AdditionOpcode, SubtractionOpcode,
+		MultiplicationOpcode, DivisionOpcode, ModuloOpcode:
+		leftRegisterIndex := instructionInstance.Parameters[0]
+		leftOperand := computer.Registers[leftRegisterIndex]
 
-		rightRegisterIndex := instructionInstance.parameters[1]
-		rightOperand := computer.registers[rightRegisterIndex]
+		rightRegisterIndex := instructionInstance.Parameters[1]
+		rightOperand := computer.Registers[rightRegisterIndex]
 
 		result := 0
-		switch instructionInstance.kind {
-		case additionOpcode:
+		switch instructionInstance.Kind {
+		case AdditionOpcode:
 			result = leftOperand + rightOperand
-		case subtractionOpcode:
+		case SubtractionOpcode:
 			result = leftOperand - rightOperand
-		case multiplicationOpcode:
+		case MultiplicationOpcode:
 			result = leftOperand * rightOperand
-		case divisionOpcode:
+		case DivisionOpcode:
 			result = leftOperand / rightOperand
-		case moduloOpcode:
+		case ModuloOpcode:
 			result = leftOperand % rightOperand
 		}
 
-		resultRegisterIndex := instructionInstance.parameters[2]
-		computer.registers[resultRegisterIndex] = result
+		resultRegisterIndex := instructionInstance.Parameters[2]
+		computer.Registers[resultRegisterIndex] = result
 	}
 }

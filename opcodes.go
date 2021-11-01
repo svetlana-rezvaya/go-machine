@@ -1,34 +1,36 @@
 package machine
 
-const loadConstantOpcode = 1
-const loadMemoryOpcode = 2
-const storeConstantOpcode = 3
-const storeMemoryOpcode = 4
-const additionOpcode = 5
-const subtractionOpcode = 6
-const multiplicationOpcode = 7
-const divisionOpcode = 8
-const moduloOpcode = 9
+const LoadConstantOpcode = 1
+const LoadMemoryOpcode = 2
+const StoreConstantOpcode = 3
+const StoreMemoryOpcode = 4
+const AdditionOpcode = 5
+const SubtractionOpcode = 6
+const MultiplicationOpcode = 7
+const DivisionOpcode = 8
+const ModuloOpcode = 9
 
-func isOpcodeKnown(opcode int) bool {
-	return opcode == loadConstantOpcode ||
-		opcode == loadMemoryOpcode ||
-		opcode == storeConstantOpcode ||
-		opcode == storeMemoryOpcode ||
-		opcode == additionOpcode ||
-		opcode == subtractionOpcode ||
-		opcode == multiplicationOpcode ||
-		opcode == divisionOpcode ||
-		opcode == moduloOpcode
+// IsOpcodeKnown ...
+func IsOpcodeKnown(opcode int) bool {
+	return opcode == LoadConstantOpcode ||
+		opcode == LoadMemoryOpcode ||
+		opcode == StoreConstantOpcode ||
+		opcode == StoreMemoryOpcode ||
+		opcode == AdditionOpcode ||
+		opcode == SubtractionOpcode ||
+		opcode == MultiplicationOpcode ||
+		opcode == DivisionOpcode ||
+		opcode == ModuloOpcode
 }
 
-func getOpcodeParameterCount(opcode int) int {
+// GetOpcodeParameterCount ...
+func GetOpcodeParameterCount(opcode int) int {
 	switch opcode {
-	case loadConstantOpcode, loadMemoryOpcode,
-		storeConstantOpcode, storeMemoryOpcode:
+	case LoadConstantOpcode, LoadMemoryOpcode,
+		StoreConstantOpcode, StoreMemoryOpcode:
 		return 2
-	case additionOpcode, subtractionOpcode,
-		multiplicationOpcode, divisionOpcode, moduloOpcode:
+	case AdditionOpcode, SubtractionOpcode,
+		MultiplicationOpcode, DivisionOpcode, ModuloOpcode:
 		return 3
 	default:
 		return 0

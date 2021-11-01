@@ -1,6 +1,7 @@
 package machine
 
-type instruction struct {
-	kind       int
-	parameters []int
+// Instruction ...
+type Instruction struct {
+	Kind       int
+	Parameters []int
 }

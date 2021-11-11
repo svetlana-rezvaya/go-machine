@@ -11,6 +11,15 @@ func ExecuteMachine(computer Machine) error {
 		}
 
 		ExecuteInstruction(computer, instructionInstance)
+
+		ipRegisterValue := computer.Registers[computer.IPRegisterIndex]
+		nextIPRegisterValue :=
+			ipRegisterValue + (GetOpcodeParameterCount(instructionInstance.Opcode) + 1)
+		if nextIPRegisterValue > len(computer.Memory)-1 {
+			break
+		}
+
+		computer.Registers[computer.IPRegisterIndex] = nextIPRegisterValue
 	}
 
 	return nil

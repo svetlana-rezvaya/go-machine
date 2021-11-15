@@ -4,7 +4,7 @@ import "fmt"
 
 // FetchInstruction ...
 func FetchInstruction(computer Machine) (Instruction, error) {
-	ipRegisterValue := computer.Registers[computer.IPRegisterIndex]
+	ipRegisterValue := computer.IPRegisterValue()
 	instructionOpcode := computer.Memory[ipRegisterValue]
 	if !IsOpcodeKnown(instructionOpcode) {
 		return Instruction{}, fmt.Errorf(

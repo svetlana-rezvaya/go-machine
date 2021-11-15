@@ -6,3 +6,8 @@ type Machine struct {
 	Registers       []int
 	IPRegisterIndex int // index of the instruction pointer register
 }
+
+// IPRegisterValue ...
+func (computer Machine) IPRegisterValue() int {
+	return computer.Registers[computer.IPRegisterIndex]
+}

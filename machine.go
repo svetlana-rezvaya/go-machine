@@ -11,3 +11,8 @@ type Machine struct {
 func (computer Machine) IPRegisterValue() int {
 	return computer.Registers[computer.IPRegisterIndex]
 }
+
+// SetIPRegisterValue ...
+func (computer Machine) SetIPRegisterValue(ipRegisterValue int) {
+	computer.Registers[computer.IPRegisterIndex] = ipRegisterValue
+}

@@ -18,7 +18,7 @@ func ExecuteMachine(computer Machine) error {
 			break
 		}
 
-		computer.Registers[computer.IPRegisterIndex] = nextIPRegisterValue
+		computer.SetIPRegisterValue(nextIPRegisterValue)
 	}
 
 	return nil

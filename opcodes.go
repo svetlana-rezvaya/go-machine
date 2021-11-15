@@ -11,6 +11,7 @@ const (
 	MultiplicationOpcode
 	DivisionOpcode
 	ModuloOpcode
+	JumpOpcode
 )
 
 // IsOpcodeKnown ...
@@ -23,12 +24,15 @@ func IsOpcodeKnown(opcode int) bool {
 		opcode == SubtractionOpcode ||
 		opcode == MultiplicationOpcode ||
 		opcode == DivisionOpcode ||
-		opcode == ModuloOpcode
+		opcode == ModuloOpcode ||
+		opcode == JumpOpcode
 }
 
 // GetOpcodeParameterCount ...
 func GetOpcodeParameterCount(opcode int) int {
 	switch opcode {
+	case JumpOpcode:
+		return 1
 	case LoadConstantOpcode, LoadMemoryOpcode,
 		StoreConstantOpcode, StoreMemoryOpcode:
 		return 2

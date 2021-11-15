@@ -130,6 +130,19 @@ func TestExecuteInstruction(test *testing.T) {
 				IPRegisterIndex: 5,
 			},
 		},
+		data{
+			name: "jumpOpcode",
+			machineInstance: Machine{
+				Memory:          []int{5, 10, 4, 0, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, 8, 6, 1, 5, 3},
+				IPRegisterIndex: 5,
+			},
+			wantedMachineInstance: Machine{
+				Memory:          []int{5, 10, 4, 0, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, 8, 6, 2, 5, 3},
+				IPRegisterIndex: 5,
+			},
+		},
 	}
 	for _, testData := range tests {
 		instructionInstance, err := FetchInstruction(testData.machineInstance)

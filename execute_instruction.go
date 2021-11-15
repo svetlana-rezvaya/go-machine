@@ -51,5 +51,13 @@ func ExecuteInstruction(computer Machine, instructionInstance Instruction) {
 
 		resultRegisterIndex := instructionInstance.Parameters[2]
 		computer.Registers[resultRegisterIndex] = result
+
+	case JumpOpcode:
+		nextIPRegisterValue := instructionInstance.Parameters[0]
+		// subtract the instruction length to compensate for increasing
+		// the instruction pointer register in the ExecuteMachine function
+		nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
+
+		computer.SetIPRegisterValue(nextIPRegisterValue)
 	}
 }

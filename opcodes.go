@@ -30,16 +30,17 @@ func IsOpcodeKnown(opcode int) bool {
 
 // GetOpcodeParameterCount ...
 func GetOpcodeParameterCount(opcode int) int {
+	count := 0
 	switch opcode {
 	case JumpOpcode:
-		return 1
+		count = 1
 	case LoadConstantOpcode, LoadMemoryOpcode,
 		StoreConstantOpcode, StoreMemoryOpcode:
-		return 2
+		count = 2
 	case AdditionOpcode, SubtractionOpcode,
 		MultiplicationOpcode, DivisionOpcode, ModuloOpcode:
-		return 3
-	default:
-		return 0
+		count = 3
 	}
+
+	return count
 }

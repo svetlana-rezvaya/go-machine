@@ -143,6 +143,84 @@ func TestExecuteInstruction(test *testing.T) {
 				IPRegisterIndex: 5,
 			},
 		},
+		data{
+			name: "jumpIfNegativeOpcode/success",
+			machineInstance: Machine{
+				Memory:          []int{5, 11, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, -8, 6, 1, 5, 3},
+				IPRegisterIndex: 5,
+			},
+			wantedMachineInstance: Machine{
+				Memory:          []int{5, 11, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, -8, 6, 2, 5, 3},
+				IPRegisterIndex: 5,
+			},
+		},
+		data{
+			name: "jumpIfNegativeOpcode/failure",
+			machineInstance: Machine{
+				Memory:          []int{5, 11, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, 8, 6, 1, 5, 3},
+				IPRegisterIndex: 5,
+			},
+			wantedMachineInstance: Machine{
+				Memory:          []int{5, 11, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, 8, 6, 1, 5, 3},
+				IPRegisterIndex: 5,
+			},
+		},
+		data{
+			name: "jumpIfZeroOpcode/success",
+			machineInstance: Machine{
+				Memory:          []int{5, 12, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, 0, 6, 1, 5, 3},
+				IPRegisterIndex: 5,
+			},
+			wantedMachineInstance: Machine{
+				Memory:          []int{5, 12, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, 0, 6, 2, 5, 3},
+				IPRegisterIndex: 5,
+			},
+		},
+		data{
+			name: "jumpIfZeroOpcode/failure",
+			machineInstance: Machine{
+				Memory:          []int{5, 12, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, 8, 6, 1, 5, 3},
+				IPRegisterIndex: 5,
+			},
+			wantedMachineInstance: Machine{
+				Memory:          []int{5, 12, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, 8, 6, 1, 5, 3},
+				IPRegisterIndex: 5,
+			},
+		},
+		data{
+			name: "jumpIfPositiveOpcode/success",
+			machineInstance: Machine{
+				Memory:          []int{5, 13, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, 8, 6, 1, 5, 3},
+				IPRegisterIndex: 5,
+			},
+			wantedMachineInstance: Machine{
+				Memory:          []int{5, 13, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, 8, 6, 2, 5, 3},
+				IPRegisterIndex: 5,
+			},
+		},
+		data{
+			name: "jumpIfPositiveOpcode/failure",
+			machineInstance: Machine{
+				Memory:          []int{5, 13, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, -8, 6, 1, 5, 3},
+				IPRegisterIndex: 5,
+			},
+			wantedMachineInstance: Machine{
+				Memory:          []int{5, 13, 3, 5, 10, 1, 7, 6},
+				Registers:       []int{2, 9, 4, -8, 6, 1, 5, 3},
+				IPRegisterIndex: 5,
+			},
+		},
 	}
 	for _, testData := range tests {
 		instructionInstance, err := FetchInstruction(testData.machineInstance)

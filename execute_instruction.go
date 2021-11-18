@@ -59,5 +59,38 @@ func ExecuteInstruction(computer Machine, instructionInstance Instruction) {
 		nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
 
 		computer.SetIPRegisterValue(nextIPRegisterValue)
+
+	case JumpIfNegativeOpcode:
+		registerIndex := instructionInstance.Parameters[0]
+		if computer.Registers[registerIndex] < 0 {
+			nextIPRegisterValue := instructionInstance.Parameters[1]
+			// subtract the instruction length to compensate for increasing
+			// the instruction pointer register in the ExecuteMachine function
+			nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
+
+			computer.SetIPRegisterValue(nextIPRegisterValue)
+		}
+
+	case JumpIfZeroOpcode:
+		registerIndex := instructionInstance.Parameters[0]
+		if computer.Registers[registerIndex] == 0 {
+			nextIPRegisterValue := instructionInstance.Parameters[1]
+			// subtract the instruction length to compensate for increasing
+			// the instruction pointer register in the ExecuteMachine function
+			nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
+
+			computer.SetIPRegisterValue(nextIPRegisterValue)
+		}
+
+	case JumpIfPositiveOpcode:
+		registerIndex := instructionInstance.Parameters[0]
+		if computer.Registers[registerIndex] > 0 {
+			nextIPRegisterValue := instructionInstance.Parameters[1]
+			// subtract the instruction length to compensate for increasing
+			// the instruction pointer register in the ExecuteMachine function
+			nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
+
+			computer.SetIPRegisterValue(nextIPRegisterValue)
+		}
 	}
 }

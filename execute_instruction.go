@@ -60,37 +60,28 @@ func ExecuteInstruction(computer Machine, instructionInstance Instruction) {
 
 		computer.SetIPRegisterValue(nextIPRegisterValue)
 
-	case JumpIfNegativeOpcode:
+	case JumpIfNegativeOpcode, JumpIfZeroOpcode, JumpIfPositiveOpcode:
 		registerIndex := instructionInstance.Parameters[0]
-		if computer.Registers[registerIndex] < 0 {
-			nextIPRegisterValue := instructionInstance.Parameters[1]
-			// subtract the instruction length to compensate for increasing
-			// the instruction pointer register in the ExecuteMachine function
-			nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
+		operand := computer.Registers[registerIndex]
 
-			computer.SetIPRegisterValue(nextIPRegisterValue)
+		isSuccessful := false
+		switch instructionInstance.Opcode {
+		case JumpIfNegativeOpcode:
+			isSuccessful = operand < 0
+		case JumpIfZeroOpcode:
+			isSuccessful = operand == 0
+		case JumpIfPositiveOpcode:
+			isSuccessful = operand > 0
+		}
+		if !isSuccessful {
+			break
 		}
 
-	case JumpIfZeroOpcode:
-		registerIndex := instructionInstance.Parameters[0]
-		if computer.Registers[registerIndex] == 0 {
-			nextIPRegisterValue := instructionInstance.Parameters[1]
-			// subtract the instruction length to compensate for increasing
-			// the instruction pointer register in the ExecuteMachine function
-			nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
+		nextIPRegisterValue := instructionInstance.Parameters[1]
+		// subtract the instruction length to compensate for increasing
+		// the instruction pointer register in the ExecuteMachine function
+		nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
 
-			computer.SetIPRegisterValue(nextIPRegisterValue)
-		}
-
-	case JumpIfPositiveOpcode:
-		registerIndex := instructionInstance.Parameters[0]
-		if computer.Registers[registerIndex] > 0 {
-			nextIPRegisterValue := instructionInstance.Parameters[1]
-			// subtract the instruction length to compensate for increasing
-			// the instruction pointer register in the ExecuteMachine function
-			nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
-
-			computer.SetIPRegisterValue(nextIPRegisterValue)
-		}
+		computer.SetIPRegisterValue(nextIPRegisterValue)
 	}
 }

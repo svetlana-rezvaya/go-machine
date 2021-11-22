@@ -14,7 +14,9 @@ func ExecuteMachine(computer Machine) error {
 
 		ipRegisterValue := computer.IPRegisterValue()
 		nextIPRegisterValue := ipRegisterValue + instructionInstance.Len()
-		if nextIPRegisterValue > len(computer.Memory)-1 {
+		// if the instruction pointer register points at the next index
+		// after the last one, then stop
+		if nextIPRegisterValue == len(computer.Memory) {
 			break
 		}
 

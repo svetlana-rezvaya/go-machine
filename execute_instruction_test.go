@@ -245,3 +245,36 @@ func TestExecuteInstruction(test *testing.T) {
 		}
 	}
 }
+
+func TestExecuteJumpInstruction(test *testing.T) {
+	machineInstance := Machine{
+		Memory:          []int{5, 12, 3, 5, 10, 1, 7, 6},
+		Registers:       []int{2, 9, 4, 0, 6, 1, 5, 3},
+		IPRegisterIndex: 5,
+	}
+
+	instructionInstance, err := FetchInstruction(machineInstance)
+	if err != nil {
+		test.Logf("failed: %s", err)
+		test.FailNow()
+	}
+
+	ExecuteJumpInstruction(machineInstance, instructionInstance, 1)
+
+	wantedMachineInstance := Machine{
+		Memory:          []int{5, 12, 3, 5, 10, 1, 7, 6},
+		Registers:       []int{2, 9, 4, 0, 6, 2, 5, 3},
+		IPRegisterIndex: 5,
+	}
+	if !reflect.DeepEqual(
+		machineInstance,
+		wantedMachineInstance,
+	) {
+		test.Logf(
+			"failed:\n  expected: %+v\n  actual: %+v",
+			wantedMachineInstance,
+			machineInstance,
+		)
+		test.Fail()
+	}
+}

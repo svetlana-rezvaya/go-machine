@@ -53,12 +53,7 @@ func ExecuteInstruction(computer Machine, instructionInstance Instruction) {
 		computer.Registers[resultRegisterIndex] = result
 
 	case JumpOpcode:
-		nextIPRegisterValue := instructionInstance.Parameters[0]
-		// subtract the instruction length to compensate for increasing
-		// the instruction pointer register in the ExecuteMachine function
-		nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
-
-		computer.SetIPRegisterValue(nextIPRegisterValue)
+		ExecuteJumpInstruction(computer, instructionInstance, 0)
 
 	case JumpIfNegativeOpcode, JumpIfZeroOpcode, JumpIfPositiveOpcode:
 		registerIndex := instructionInstance.Parameters[0]
@@ -73,15 +68,23 @@ func ExecuteInstruction(computer Machine, instructionInstance Instruction) {
 		case JumpIfPositiveOpcode:
 			isSuccessful = operand > 0
 		}
-		if !isSuccessful {
-			break
+
+		if isSuccessful {
+			ExecuteJumpInstruction(computer, instructionInstance, 1)
 		}
-
-		nextIPRegisterValue := instructionInstance.Parameters[1]
-		// subtract the instruction length to compensate for increasing
-		// the instruction pointer register in the ExecuteMachine function
-		nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
-
-		computer.SetIPRegisterValue(nextIPRegisterValue)
 	}
+}
+
+// ExecuteJumpInstruction ...
+func ExecuteJumpInstruction(
+	computer Machine,
+	instructionInstance Instruction,
+	addressParameterIndex int,
+) {
+	nextIPRegisterValue := instructionInstance.Parameters[addressParameterIndex]
+	// subtract the instruction length to compensate for increasing
+	// the instruction pointer register in the ExecuteMachine function
+	nextIPRegisterValue = nextIPRegisterValue - instructionInstance.Len()
+
+	computer.SetIPRegisterValue(nextIPRegisterValue)
 }

@@ -7,6 +7,10 @@
 
 The library implementing a simple virtual machine.
 
+## Instruction Set
+
+[Instruction Set](docs/)
+
 ## Installation
 
 ```
